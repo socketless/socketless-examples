@@ -3,9 +3,11 @@ const socketless = new SocketlessClient();
 
 module.exports = (req, res) => {
 
-  console.log('onMsg', req.body);
-  const sid = req.body.sid;
-  const msg = JSON.parse(req.body.data);
+  console.log('onMsg', req.query, req.body);
+  const sid = req.query.sid;
+  const msg = req.body;
+
+  req.on('data', data=>console.log(5, data.toString()));
 
   switch (msg.type) {
     case 'nick':
