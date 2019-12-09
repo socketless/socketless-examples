@@ -21,7 +21,7 @@ ws.on('open', function open() {
   console.log('client open');
 
   ws.on('message', data => {
-    console.log('browser received: ', data);
+    console.log('browser received: ', data.toString());
   })
 
   let cmd = { type: 'join', room: 'new2irc' };
