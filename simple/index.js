@@ -29,4 +29,11 @@ ws.on('open', function open() {
 
   cmd = { type: 'post', room: 'new2irc', message: 'hi' };
   ws.send(JSON.stringify(cmd));
+
+  setTimeout(() => {
+    let cmd = { type: 'post', room: 'new2irc', message: 'hi' };
+    ws.send(JSON.stringify(cmd));
+  }, 500);
+
+
 });
