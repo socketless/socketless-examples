@@ -1,0 +1,29 @@
+<html>
+
+  <head>
+    <title>Socketless Draw Example</title>
+    <script type="module" src="./index.js"></script>
+    <style type="text/css">
+      #sketch { width: 450px; height: 250px; }
+      #paint { border: 1px solid black };
+    </style>
+  </head>
+
+  <body>
+    <div id="sketch">
+      <canvas id="paint"></canvas>
+    </div>
+
+    <div>
+      <p>
+        Currently, all drawing happens via the websocket, so you can use this
+        to judge latency even in a single window.
+      </p>
+      <p>
+        Open the same URL in another window, make sure you can see both canvases,
+        and draw in either.
+      </p>
+    </div>
+  </body>
+
+</html>

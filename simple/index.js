@@ -1,4 +1,4 @@
-const server = require('../../server');
+const SocketlessServer = require('../../server');
 const WebSocket = require('ws');
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -6,7 +6,7 @@ const bodyParser = require('body-parser');
 const API_SERVER_PORT=3000;
 const SOCKETLESS_WS_URL='ws://localhost:4000/';
 
-server.init();
+new SocketlessServer();
 
 const api = express();
 api.listen(API_SERVER_PORT, () => {
