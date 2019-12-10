@@ -5,7 +5,7 @@ module.exports = (req, res) => {
 
   console.log('onMsg', req.query, req.body);
   const imr = socketless.incoming(req);
-  const msg = req.body;
+  const msg = JSON.parse(req.body);
 
   switch (msg.type) {
     case 'nick':

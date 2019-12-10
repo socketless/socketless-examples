@@ -14,7 +14,8 @@ api.listen(API_SERVER_PORT, () => {
     + API_SERVER_PORT);
 });
 //api.use(bodyParser.json());
-api.post('/api/onMsg', bodyParser.json(), require('./api/onMsg'));
+api.post('/api/onMsg', bodyParser.text(), require('./api/onMsg'));
+api.get('/api/onConnect', require('./api/onConnect'));
 
 const ws = new WebSocket(SOCKETLESS_WS_URL);
 ws.on('open', function open() {
