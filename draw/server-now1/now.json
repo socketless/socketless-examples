@@ -1,0 +1,10 @@
+{
+  "name": "socketless-draw-sls",
+  "version": 1,
+  "alias": "sls.draw.socketless.org",
+  "regions": [ "bru1" ],
+  "env": {
+    "SOCKETLESS_ON_MSG_URL": "https://draw.socketless.org/api/onMsg",
+    "SOCKETLESS_ON_CONNECT_URL": "https://draw.socketless.org/api/onConnect"
+  }
+}

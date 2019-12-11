@@ -1,0 +1,12 @@
+{
+  "name": "draw-sls",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "socketless-server": "^0.0.1"
+  },
+  "scripts": {
+    "start": "node index.js"
+  }
+}

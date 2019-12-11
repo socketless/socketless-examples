@@ -1,5 +1,6 @@
-const ws = new WebSocket('ws://localhost:4000/');
-
+const isProd = document.location.href === "https://draw.socketless.org/";
+const url = isProd ? 'wss://sls.draw.socketless.org/' : 'ws://localhost:4000/';
+const ws = new WebSocket(url);
 
 ws.onmessage = function(event) {
   const msg = JSON.parse(event.data);

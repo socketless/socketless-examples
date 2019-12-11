@@ -3,9 +3,12 @@ const socketless = new SocketlessClient();
 
 module.exports = (req, res) => {
 
-  console.log('onConnect', req.query, req.body);
+  console.log('onMsg', req.query, req.body);
   const imr = socketless.incoming(req);
-  imr.addTag('default');
-  res.sendStatus(200);
+  const msg = req.body;
 
+  socketless.sendToTag('default', req.body);
+
+  //res.sendStatus(200);
+  res.status(200).send('OK');
 }

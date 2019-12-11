@@ -1,4 +1,4 @@
-const SocketlessServer = require('../../server');
+const SocketlessServer = require('socketless-server');
 const WebSocket = require('ws');
 const express = require('express');
 const bodyParser = require('body-parser');

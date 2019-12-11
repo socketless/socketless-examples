@@ -1,0 +1,11 @@
+{
+  "name": "socketless-draw",
+  "version": 2,
+  "alias": "draw.socketless.org",
+  "regions": [ "bru1" ],
+  "build": {
+    "env": {
+      "SOCKETLESS_REST_URL": "http://sls.draw.socketless.org/"
+    }
+  }
+}
