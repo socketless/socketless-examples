@@ -138,6 +138,13 @@ debug@2.6.9:
   dependencies:
     ms "2.0.0"
 
+debug@^4.1.1:
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/debug/-/debug-4.1.1.tgz#3b72260255109c6b589cee050f1d516139664791"
+  integrity sha512-pYAIzeRo8J6KPEaJ0VWOh5Pzkbw/RetuzehGM7QRRX5he4fPHx2rdKMB256ehJCkX+XRQm16eZLqLNS8RSZXZw==
+  dependencies:
+    ms "^2.1.1"
+
 delayed-stream@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/delayed-stream/-/delayed-stream-1.0.0.tgz#df3ae199acadfb7d440aaae0b29e2272b24ec619"
@@ -434,6 +441,11 @@ ms@2.1.1:
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.1.1.tgz#30a5864eb3ebb0a66f2ebe6d727af06a09d86e0a"
   integrity sha512-tgp+dl5cGk28utYktBsrFqA7HKgrhgPsg6Z/EfhWI4gl1Hwq8B/GmY/0oXZ6nF8hDVesS/FpnYaD/kOWhYQvyg==
 
+ms@^2.1.1:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/ms/-/ms-2.1.2.tgz#d09d1f357b443f493382a8eb3ccd183872ae6009"
+  integrity sha512-sGkPx+VjMtmA6MX27oA4FBFELFCZZ4S4XqeGOXCv68tT+jb3vk/RyaKWP0PTKyWtmLSM0b+adUTEvbs1PEaH2w==
+
 negotiator@0.6.2:
   version "0.6.2"
   resolved "https://registry.yarnpkg.com/negotiator/-/negotiator-0.6.2.tgz#feacf7ccf525a77ae9634436a64883ffeca346fb"
@@ -589,12 +601,13 @@ setprototypeof@1.1.1:
   resolved "https://registry.yarnpkg.com/setprototypeof/-/setprototypeof-1.1.1.tgz#7e95acb24aa92f5885e0abef5ba131330d4ae683"
   integrity sha512-JvdAWfbXeIGaZ9cILp38HntZSFSo3mWg6xGcJJsd+d4aRMOqauag1C63dJfDw7OaMYwEbHMOxEZ1lqVRYP2OAw==
 
-socketless-server@^0.0.1:
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/socketless-server/-/socketless-server-0.0.1.tgz#1d4f67bed2a53f2ab153d0b2cb53a200f2331df6"
-  integrity sha512-fA+/rckPq5wphlWfal508YYaJ8G3ZXWADb0pFoUgyR2LPJu/fAP56EUtvyJMlT7Q3StX+MKn9uY8PxacDHfeEQ==
+socketless-server@^0.0.2:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/socketless-server/-/socketless-server-0.0.2.tgz#4f0d358bbeeb7dad363061d4b0fed712add7742a"
+  integrity sha512-PRhgne8VQa0YShqxyeCUusZPmQy2T7vhq2eUwnhvRxcx5mQbaYV7WPkdPo6rBKE9WXIs/3p3rB4nKHv4fFoxFQ==
   dependencies:
     body-parser "^1.19.0"
+    debug "^4.1.1"
     express "^4.17.1"
     request "^2.88.0"
     uuid "^3.3.3"
