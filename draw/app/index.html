@@ -5,7 +5,8 @@
     <script type="module" src="./index.js"></script>
     <style type="text/css">
       #sketch { width: 450px; height: 250px; }
-      #paint { border: 1px solid black };
+      #paint { border: 1px solid black }
+      #statusBox { width: 10px; height: 10px; background: gray; display: inline-block }
     </style>
   </head>
 
@@ -15,6 +16,10 @@
     </div>
 
     <div>
+      <div>
+        <span id="statusBox"></span>
+        <span id="statusText">Connecting...</span>
+      </div>
       <p>
         Currently, all drawing happens via the websocket, so you can use this
         to judge latency even in a single window.
@@ -22,6 +27,10 @@
       <p>
         Open the same URL in another window, make sure you can see both canvases,
         and draw in either.
+      </p>
+      <p>
+        No mobile (touch) support yet.... you can watch on mobile, but can
+        only draw with a mouse.  Sorry :)
       </p>
     </div>
   </body>

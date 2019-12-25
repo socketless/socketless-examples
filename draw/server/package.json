@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
-    "socketless-server": "^0.0.2"
+    "socketless-server": "^0.1.2"
   },
   "scripts": {
     "start": "node index.js"

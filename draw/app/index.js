@@ -1,8 +1,34 @@
 const isProd = document.location.href === "https://draw.socketless.org/";
 const url = isProd ? 'wss://sls.draw.socketless.org/' : 'ws://localhost:4000/';
 const ws = new WebSocket(url);
+let statusBox, statusText;
+let pingInterval;
+
+ws.onopen = function() {
+  if (!statusBox) return;
+  statusBox.style.background = 'green';
+  statusText.innerText = 'Connected';
+
+  pingInterval = setInterval(() => {
+    ws.send('SLS PING ' + Date.now());
+  }, 2000);
+}
+
+ws.onclose = function() {
+  statusBox.style.background = 'red';
+  statusText.innerText = 'Disconnected';
+  clearInterval(pingInterval);
+}
 
 ws.onmessage = function(event) {
+  if (event.data.substr(0, 9) === 'SLS PONG ') {
+    const pingTime = parseInt(event.data.substr(9));
+    const latency = Date.now() - pingTime;
+
+    statusText.innerText = "Connected, latency: " + latency + "ms";
+    return;
+  }
+
   const msg = JSON.parse(event.data);
 
   if (msg.type === 'paint') {
@@ -16,6 +42,11 @@ ws.onmessage = function(event) {
 
 let ctx;
 window.onload = function() {
+  statusBox = document.getElementById('statusBox');
+  statusText = document.getElementById('statusText');
+  if (ws.readyState === 1)
+    ws.onopen();
+
   // https://stackoverflow.com/questions/2368784/draw-on-html5-canvas-using-a-mouse
   // https://stackoverflow.com/a/18384343/1839099 thanks Sam Jones
   var canvas = document.querySelector('#paint');
