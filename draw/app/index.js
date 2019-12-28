@@ -1,23 +1,40 @@
+const PING_INTERVAL=2000;
+
 const isProd = document.location.href === "https://draw.socketless.org/";
 const url = isProd ? 'wss://sls.draw.socketless.org/' : 'ws://localhost:4000/';
 const ws = new WebSocket(url);
 let statusBox, statusText;
-let pingInterval;
+let lastPing, pingCheck;
+
+function ping() {
+  lastPing = Date.now();
+  ws.send('SLS PING ' + lastPing);
+  pingCheck = setInterval(checkPing, 500);
+}
+
+function checkPing() {
+  const now = Date.now();
+  const diff = now - lastPing;
+
+  if (diff > 5000) {
+    ws.close();
+    ws.onclose();
+  } else if (diff > 1000) {
+    statusText.innerText = "Connected, latency: >" + Math.floor(diff/1000) + 's';
+  }
+}
 
 ws.onopen = function() {
   if (!statusBox) return;
   statusBox.style.background = 'green';
   statusText.innerText = 'Connected';
-
-  pingInterval = setInterval(() => {
-    ws.send('SLS PING ' + Date.now());
-  }, 2000);
+  ping();
 }
 
 ws.onclose = function() {
   statusBox.style.background = 'red';
   statusText.innerText = 'Disconnected';
-  clearInterval(pingInterval);
+  clearInterval(pingCheck);
 }
 
 ws.onmessage = function(event) {
@@ -26,6 +43,8 @@ ws.onmessage = function(event) {
     const latency = Date.now() - pingTime;
 
     statusText.innerText = "Connected, latency: " + latency + "ms";
+    clearInterval(pingCheck);
+    setTimeout(ping, PING_INTERVAL);
     return;
   }
 
@@ -47,6 +66,7 @@ window.onload = function() {
   if (ws.readyState === 1)
     ws.onopen();
 
+  // Loosely based on
   // https://stackoverflow.com/questions/2368784/draw-on-html5-canvas-using-a-mouse
   // https://stackoverflow.com/a/18384343/1839099 thanks Sam Jones
   var canvas = document.querySelector('#paint');
@@ -58,15 +78,7 @@ window.onload = function() {
   canvas.height = parseInt(sketch_style.getPropertyValue('height'));
 
   var mouse = { x: 0, y: 0 }, last_mouse = { x: 0, y: 0 };
-
-  /* Mouse Capturing Work */
-  canvas.addEventListener('mousemove', function(e) {
-      last_mouse.x = mouse.x;
-      last_mouse.y = mouse.y;
-
-      mouse.x = e.pageX - this.offsetLeft;
-      mouse.y = e.pageY - this.offsetTop;
-  }, false);
+  var isDrawing = false;
 
   /* Drawing on Paint App */
   ctx.lineWidth = 5;
@@ -74,16 +86,37 @@ window.onload = function() {
   ctx.lineCap = 'round';
   ctx.strokeStyle = 'black';
 
-  canvas.addEventListener('mousedown', function(e) {
-      canvas.addEventListener('mousemove', onPaint, false);
-  }, false);
+  function setDrawing(value) {
+    return function(e) { e.preventDefault(); isDrawing = value; if (!value) mouse.x = mouse.y = null; }
+  }
 
-  canvas.addEventListener('mouseup', function() {
-      canvas.removeEventListener('mousemove', onPaint, false);
-  }, false);
+  function onMove(event) {
+    if (!isDrawing)
+      return;
+
+    if (event.touches)
+      event.preventDefault(); // don't scroll
+
+    last_mouse.x = mouse.x;
+    last_mouse.y = mouse.y;
+
+    mouse.x = (event.touches ? event.touches[0] : event).pageX - this.offsetLeft;
+    mouse.y = (event.touches ? event.touches[0] : event).pageY - this.offsetTop;
+
+    if (last_mouse.x && last_mouse.y)
+      paint();
+  }
+
+  canvas.addEventListener('mousedown', setDrawing(true), false);
+  canvas.addEventListener('mouseup', setDrawing(false), false);
+  canvas.addEventListener('mousemove', onMove, false);
+
+  canvas.addEventListener('touchstart', setDrawing(true), false);
+  canvas.addEventListener('touchend', setDrawing(false), false);
+  canvas.addEventListener('touchmove', onMove, false);
 
   // This is the only mod for sharing, original commented out.
-  var onPaint = function() {
+  var paint = function() {
     /*
       ctx.beginPath();
       ctx.moveTo(last_mouse.x, last_mouse.y);
